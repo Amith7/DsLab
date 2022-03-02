@@ -1,0 +1,167 @@
+//Knn-predict
+from sklearn.neighbors import KNeighborsClassifier
+x1=[7,7,3,1]
+x2=[7,4,4,4]
+target=['bad','bad','Good','Good']
+from sklearn import preprocessing
+le = preprocessing.LabelEncoder()
+target_encoded=le.fit_transform(target)
+features=zip(x1,x2)
+features = list(features)
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(features,target)
+print(knn.predict([[7,7]]))
+
+//knn_accuracy
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_iris
+irisData = load_iris()
+print("Features: ", irisData.feature_names)
+print("Labels: ", irisData.target_names)
+X = irisData.data
+y = irisData.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42)
+knn = KNeighborsClassifier(n_neighbors=7)
+knn.fit(X_train, y_train)
+print(knn.predict([[7.7,2.6,6.9,2.3]]))
+y_pred=knn.predict(X_test)
+from sklearn.metrics import accuracy_score
+ac = accuracy_score(y_test,y_pred)
+print(ac)
+
+//neighbours_accuracy  --- accuracy naive base
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_iris
+irisData = load_iris()
+print("Features: ", irisData.feature_names)
+print("Labels: ", irisData.target_names)
+X = irisData.data
+y = irisData.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42)
+from sklearn.naive_bayes import GaussianNB
+gnb = GaussianNB()
+tragnb.fit(X_train, y_in)
+print(gnb.predict([[7.7,2.6,6.9,2.3]]))
+y_pred1 = gnb.predict(X_test)
+print(y_pred1)
+from sklearn.metrics import accuracy_score
+ac1 = accuracy_score(y_test,y_pred1)
+print(ac1)
+
+//neighbours_predict   --- prediction naivebase
+weather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',
+'Rainy','Sunny','Overcast','Overcast','Rainy']
+temp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']
+play=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']
+from sklearn import preprocessing
+le = preprocessing.LabelEncoder()
+weather_encoded=le.fit_transform(weather)
+print(weather_encoded)
+temp_encoded=le.fit_transform(temp)
+label=le.fit_transform(play)
+print("Temp:",temp_encoded)
+print("Play:",label)
+features=zip(weather_encoded,temp_encoded)
+features = list(features)
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+predicted= model.predict([[0,2]]) 
+print("Predicted Value:", predicted)
+
+//confusion and classification-- diabetics
+import pandas as pd
+df=pd.read_csv("/content/diabetes.csv")
+df.head()
+X = df.drop("Outcome",axis=1) 
+Y = df["Outcome"]
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state=42)
+from sklearn.naive_bayes import GaussianNB
+gnb = GaussianNB()
+gnb.fit(X_train, Y_train)
+Y_pred1 = gnb.predict(X_test)
+print(Y_pred1)
+from sklearn.metrics import accuracy_score
+ac1 = accuracy_score(Y_test,Y_pred1)
+print(ac1)
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+metrics=confusion_matrix(Y_test,Y_pred1)
+print("confusion_matrix:\n", metrics)cr=classification_report(Y_test,Y_pred1)
+print("classification_report:\n",cr)
+
+
+
+//decision tree-prg6
+import pandas as pd
+import numpy as np
+from sklearn.datasets import load_diabetes
+data=load_diabetes()
+print(data)
+X = data.data
+y = data.target
+display (X.shape, y.shape)
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+X_train, X_test, y_train, y_test = train_test_split(X, y,random_state = 50, test_size = 0.25)
+y_pred = classifier.predict(X_test)
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, y_train)
+from sklearn.metrics import accuracy_score
+print('Accuracy on train data using Gini: ',accuracy_score(y_train, y_pred = classifier.predict(X_train)))
+print('Accuracy on test data using Gini: ',accuracy_score(y_test,y_pred))
+classifier_entropy = DecisionTreeClassifier(criterion='entropy')
+classifier_entropy.fit(X_train, y_train)
+y_pred_entropy = classifier_entropy.predict(X_test)
+print('Accuracy on train data using entropy', accuracy_score(y_train, y_pred = classifier_entropy.predict(X_train)))
+print('Accuracy on test data using entropy', accuracy_score(y_test,y_pred_entropy))
+
+//simple linear regression-- simple
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+dataset = pd.read_csv('/content/Salary.csv')
+dataset.head()
+X = dataset.iloc[:,:-1].values 
+y = dataset.iloc[:,1].values  
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3,random_state=0)
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train,y_train) 
+y_pred = regressor.predict(X_test)
+print('Coefficients: ', regressor.coef_)
+print('intercept:', regressor.intercept_) 
+plt.scatter(X_train, y_train, color='red') 
+plt.plot(X_train, regressor.predict(X_train), color='blue')
+plt.title("Salary vs Experience (Training set)") 
+plt.xlabel("Years of experience") 
+plt.ylabel("Salaries") 
+plt.show() 
+plt.scatter(X_test, y_test, color='red') 
+plt.plot(X_train, regressor.predict(X_train), color='blue') 
+plt.title("Salary vs Experience (Testing set)")
+plt.xlabel("Years of experience") 
+plt.ylabel("Salaries") 
+plt.show()
+
+//multi linear regression-- 
+import pandas as pd
+dataset = pd.read_csv('./Advertising.csv')
+dataset.head()
+X = dataset.iloc[:,:-1]
+y = dataset.iloc[:,1]
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3,random_state=100)
+from sklearn.linear_model import LinearRegression
+mlr= LinearRegression()
+mlr.fit(X_train,y_train)
+print('intercept:', mlr.intercept_)
+print('Coefficients: ',mlr.coef_)
+list(zip(X,mlr.coef_))
+y_pred_mlr = mlr.predict(X_test) 
+print("prediction for test set:{}",format(y_pred_mlr))
+
+
+//
